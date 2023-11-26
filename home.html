@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <!-- Import Bootstrap -->
+  <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./node_modules/">
+  <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  <!-- Import Axios -->
+  <script src="./node_modules/axios/dist/axios.min.js"></script>
+
+  <!-- Import My custom CSS -->
+  <link rel="stylesheet" href="./assets/sass/style.css">
+  <style>
+    body {
+      background-color: rgb(252, 237, 255);
+    }
+
+    .card {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Toasts -->
+  <!-- Toast -->
+  <div id="toast" class="toast align-items-center bottom-0 fade" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+
+      </div>
+      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+
+  <!-- Toast END -->
+  <!-- Toasts END-->
+  <!-- MODALS -->
+  <!-- LOGIN_MODAL -->
+  <div class="modal fade" id="login_modal" tabindex="-1" aria-labelledby="login" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="login_header">Login</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="login_username" class="col-form-label">Username:</label>
+              <input type="text" class="form-control" id="login_username">
+            </div>
+            <div class="mb-3">
+              <label for="login_password" class="col-form-label">Password:</label>
+              <input type="password" class="form-control" id="login_password"></input>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer login-modal-footer ">
+          <div class="login-error-cont col-12 text-center bg-danger-subtle rounded">
+
+          </div>
+          <div class="buttons">
+            <button id="close_login_modal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button id="submit_login" class="btn btn-primary">Login</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- LOGIN_MODAL END -->
+
+
+  <!-- REG_MODAL -->
+  <div class="modal fade" id="reg_modal" tabindex="-1" aria-labelledby="register" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="reg_header">Register</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="reg_username" class="col-form-label">Username:</label>
+              <input type="text" class="form-control" id="reg_username">
+            </div>
+
+            <div class="mb-3">
+              <label for="reg_name" class="col-form-label">Name:</label>
+              <input type="text" class="form-control" id="reg_name">
+            </div>
+
+            <div class="mb-3">
+              <label for="reg_email" class="col-form-label">Email:</label>
+              <input type="text" class="form-control" id="reg_email">
+            </div>
+
+            <div class="mb-3">
+              <label for="reg_img" class="col-form-label">Profile foto:</label>
+              <input type="file" class="form-control" id="reg_img">
+            </div>
+            <div class="mb-3">
+              <label for="reg_password" class="col-form-label">Password:</label>
+              <input type="password" class="form-control" id="reg_password"></input>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer reg-modal-footer ">
+          <div class="reg-error-cont col-12 text-center bg-danger-subtle rounded">
+
+          </div>
+          <div class="buttons">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button id="submit_reg" class="btn btn-primary">Register</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- LOGIN_MODAL END -->
+
+
+  <!-- Add New Post Modal -->
+  <div class="modal fade" id="new_post_modal" tabindex="-1" aria-labelledby="new_post" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="new_post_header">New Post</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="new_post_titel" class="col-form-label">Title:</label>
+              <input type="text" class="form-control" id="new_post_titel">
+            </div>
+            <div class="mb-3">
+              <textarea type="text" class="form-control" id="new_post_body"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="new_post_img" class="col-form-label">Image:</label>
+              <input type="file" class="form-control" id="new_post_img"></input>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer new_post_modal_footer ">
+          <div class="new_post_error_cont col-12 text-center bg-danger-subtle rounded">
+
+          </div>
+          <div class="buttons">
+            <button id="close_new_post_modal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button id="submit_new_post" class="btn btn-primary">Post</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Add New Post Modal END -->
+
+
+
+  <!-- Add Post Button -->
+  <div id="addPost-cont" class="addPost-cont position-fixed d-none">
+    <button class="btn btn-info rounded-5 shadow-sm" data-bs-toggle="modal" data-bs-target="#new_post_modal"> +
+    </button>
+  </div>
+
+  <!-- MODULES END -->
+  <div class="container">
+    <!-- Header -->
+    <div class="col-12">
+      <!-- nav bar -->
+      <nav class="navbar navbar-expand-sm bg-body-tertiary rounded shadow">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="#">Abdullah </a>
+              <a class="nav-link" href="#">Home</a>
+              <a class="nav-link" href="#">Profile</a>
+            </div>
+          </div>
+          <!-- User Info: username & Foto -->
+          <div id="userinfo" class="me-2">
+
+          </div>
+          <!-- REG & LOGIN & Logout Buttons -->
+          <div class="log-reg-logout-cont d-flex justify-content-end gap-2">
+            <button id="login_btn" class="btn btn-outline-success" data-bs-toggle="modal"
+              data-bs-target="#login_modal">login</button>
+            <button id="register_btn" type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+              data-bs-target="#reg_modal">Register</button>
+
+            <button id="logout_btn" type="button" class="btn btn-outline-danger">Logout</button>
+          </div>
+
+        </div>
+      </nav>
+      <!-- nav bar end -->
+    </div>
+    <!-- Header end  -->
+  </div>
+
+  </div>
+
+  <!-- Main content  -->
+  <div class="container mt-3">
+    <!-- Posts -->
+    <div id="posts" class="col-12">
+
+    </div>
+  </div>
+  <div class="scripts">
+    <script src="./assets/js/Events/posts/GetPosts.js" type="module"></script>
+    <script src="./assets/js/Events/users/LoginUser.js" type="module"></script>
+    <script src="./assets/js/Events/users/LogoutUser.js" type="module"></script>
+    <script src="./assets/js/Events/users/RegUser.js" type="module"></script>
+    <script src="./assets/js/Events/posts/CreatePost.js" type="module"></script>
+  </div>
+
+</body>
+
+</html>
+<
