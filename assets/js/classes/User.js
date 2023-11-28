@@ -1,6 +1,6 @@
-import Global from "./Global.js";
+import SocialVista from "./SocialVista.js";
 
-class User extends Global {
+class User extends SocialVista {
 
 
   async getUser(id) {

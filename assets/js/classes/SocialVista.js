@@ -1,20 +1,41 @@
-class Global {
+class SocialVista {
+  // TODO: umbenen zu nextPageNumber
+  static currentPageNumber = 0;
+  static schonAbgefragteUrl = [];
+
   getBaseUrl() {
     return "https://tarmeezacademy.com/api/v1";
   }
-  async getPosts(limit) {
+
+  async getPosts(limit, currentPage = 0) {
+
     const baseUrl = this.getBaseUrl();
+
+    let url = `${baseUrl}/posts?limit=${limit}`;
+    if (currentPage > 0) {
+      url += `&page=${currentPage}`;
+    }
+    if (SocialVista.schonAbgefragteUrl.includes(url))
+      return null;
+
+    SocialVista.schonAbgefragteUrl.push(url);
     try {
-      const response = await axios.get(`${baseUrl}/posts?limit=${limit}`);
+      const response = await axios.get(url);
       return response;
     }
     catch (error) {
       return error;
     }
   }
-  renderPosts(data) {
-    data = data.data.data;
-    data.forEach(post => {
+
+  renderPosts(data, reload = true) {
+    if (!data)
+      return;
+    if (reload)
+      document.getElementById("posts").innerHTML = "";
+
+    const posts = data.data.data;
+    posts.forEach(post => {
       const html =
         `<div class="card">
         <div class="card-header">
@@ -37,6 +58,9 @@ class Global {
 
       document.getElementById("posts").innerHTML += html;
     });
+
+
+    SocialVista.currentPageNumber = ++data.data.meta.current_page
   }
 
   showToast(message, dauration) {
@@ -63,4 +87,4 @@ class Global {
   }
 }
 
-export default Global;
+export default SocialVista;

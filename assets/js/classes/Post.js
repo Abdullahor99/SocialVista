@@ -1,6 +1,6 @@
-import Global from "./Global.js";
+import SocialVista from "./SocialVista.js";
 
-class Post extends Global {
+class Post extends SocialVista {
 
   async createPost(formData) {
     const finalUrl = this.getBaseUrl() + "/posts";
@@ -13,14 +13,33 @@ class Post extends Global {
           'Authorization': `Bearer ${token}`
         }
       });
-      console.log(response);
-
       return response;
     }
     catch (error) {
       return error;
     }
 
+  }
+
+  static loadMorePosts() {
+
+    const SVista = new SocialVista();
+    const currentPageNumber = SocialVista.currentPageNumber;
+
+    SVista.getPosts(5, currentPageNumber).then(response => {
+      SVista.renderPosts(response, false);
+    }).catch(error => {
+      console.error(error);
+    });
+  }
+
+  handleScroll() {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+    const clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+
+    if (scrollTop + clientHeight >= scrollHeight - 10)
+      Post.loadMorePosts();
   }
 }
 

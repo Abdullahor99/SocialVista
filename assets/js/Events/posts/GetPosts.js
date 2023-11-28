@@ -1,14 +1,14 @@
-import Global from "../../classes/Global.js";
+import SocialVista from "../../classes/SocialVista.js";
 
 addEventListener("DOMContentLoaded", function () {
-  const global = new Global();
+  const SVista = new SocialVista();
   try {
-    global.getPosts(105).then((data) => {
-      global.renderPosts(data);
+    SVista.getPosts(5).then((data) => {
+      SVista.renderPosts(data);
     })
   }
   catch {
-    console.log("test");
+    console.error("getPosts");
   }
 
 })

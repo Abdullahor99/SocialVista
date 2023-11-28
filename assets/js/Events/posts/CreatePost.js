@@ -1,11 +1,10 @@
 import Post from "../../classes/Post.js";
+import SocialVista from "../../classes/SocialVista.js";
 
 addEventListener("DOMContentLoaded", function () {
   const post = new Post();
-  console.log("new post");
   const submitNewPost = this.document.getElementById("submit_new_post");
   submitNewPost.addEventListener("click", function () {
-    console.log("new post click");
     post.deletePrevErrors();
     const title = document.getElementById("new_post_titel");
     const body = document.getElementById("new_post_body");
@@ -26,6 +25,14 @@ addEventListener("DOMContentLoaded", function () {
         const modal = document.getElementById("new_post_modal");
         const modalInstanz = bootstrap.Modal.getInstance(modal);
         modalInstanz.hide();
+        const SVista = new SocialVista();
+
+        SVista.getPosts(5).then((data) => {
+          SVista.renderPosts(data);
+        }).catch((error) => {
+          console.error(error);
+        });
+
         post.showToast("Post created successfully", 5000);
       }
     });
