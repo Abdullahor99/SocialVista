@@ -6,13 +6,13 @@ addEventListener("DOMContentLoaded", function () {
 
   const logbtn = this.document.getElementById("submit_login");
   logbtn.addEventListener("click", function () {
-    user.deletePrevErrors();
+
     const username = document.getElementById("login_username");
     const password = document.getElementById("login_password");
 
     user.login(username.value, password.value).then(data => {
       if (data?.response?.status > 400) {
-        user.makeError(data.response.data.message, ".login-error-cont");
+        user.alert(data.response.data.message, "danger");
       }
       else {
         const userData = JSON.stringify(data.data.user);
@@ -27,7 +27,7 @@ addEventListener("DOMContentLoaded", function () {
         // show UI for logged in Users 
         user.showUIforLoggedInUsers(data.data.user);
         // show cool toast
-        user.showToast("You have successfully logged in.", 5000);
+        user.alert("You have successfully logged in.", "success");
       }
     });
 

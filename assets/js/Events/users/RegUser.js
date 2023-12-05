@@ -5,7 +5,7 @@ addEventListener("DOMContentLoaded", function () {
 
   const logbtn = this.document.getElementById("submit_reg");
   logbtn.addEventListener("click", function () {
-    user.deletePrevErrors();
+
     const username = document.getElementById("reg_username");
     const name = document.getElementById("reg_name");
     const email = document.getElementById("reg_email");
@@ -20,9 +20,9 @@ addEventListener("DOMContentLoaded", function () {
     formData.append("password", password.value);
 
     user.regeister(formData).then(data => {
-      if (data?.response?.status > 400) {
-        user.makeError(data.response.data.message, ".reg-error-cont");
-      }
+      if (data?.response?.status > 400)
+        user.alert(data.response.data.message, "danger");
+
       else {
         const userData = JSON.stringify(data.data.user);
         // save user in Localstorage
@@ -36,7 +36,7 @@ addEventListener("DOMContentLoaded", function () {
 
         user.showUIforLoggedInUsers(data.data.user);
         // show cool toast that the user 
-        user.showToast("You have successfully registered.", 5000);
+        user.alert("You have successfully registered.", "success");
       }
     });
 

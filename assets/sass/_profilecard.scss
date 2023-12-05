@@ -1,11 +1,3 @@
-html {
-  height: 100%;
-}
-
-body {
-  background: rgba(232, 232, 232, 0.4745098039);
-}
-
 .section_our_solution .row {
   align-items: center;
 }
@@ -15,17 +7,16 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
 }
-
 .our_solution_category .solution_cards_box {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-
 .solution_cards_box .solution_card {
   flex: 0 50%;
   background: #fff;
-  box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2), 0 5px 15px 0 rgba(37, 44, 97, 0.15);
+  box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2),
+    0 5px 15px 0 rgba(37, 44, 97, 0.15);
   border-radius: 15px;
   margin-top: 18px;
   padding: 10px 15px;
@@ -44,7 +35,7 @@ body {
 }
 
 .solution_cards_box .solution_card:hover::before {
-  background: rgba(85, 108, 214, 0.1);
+  background: rgb(85 108 214 / 10%);
 }
 
 .solution_cards_box .solution_card:hover .solu_title h3,
@@ -55,7 +46,7 @@ body {
 .solution_cards_box .solution_card:before {
   content: "";
   position: absolute;
-  background: rgba(85, 108, 214, 0.05);
+  background: rgb(85 108 214 / 5%);
   width: 170px;
   height: 400px;
   z-index: -1;
@@ -69,6 +60,9 @@ body {
   background: #fff !important;
   color: #309df0;
   color: grey;
+}
+
+.solution_card .so_top_icon {
 }
 
 .solution_card .solu_title h3 {
@@ -91,6 +85,7 @@ body {
 
 .hover_color_bubble {
   position: absolute;
+  // background: rgb(54 81 207 / 15%);
   background: rgba(101, 102, 109, 0.15);
   width: 100rem;
   height: 100rem;
@@ -127,17 +122,18 @@ body {
 .solu_title span {
   font-size: 3rem;
 }
-
 /*start media query*/
 @media screen and (min-width: 320px) {
   .sol_card_top_3 {
     position: relative;
     top: 0;
   }
+
   .our_solution_category {
     width: 100%;
     margin: 0 auto;
   }
+
   .our_solution_category .solution_cards_box {
     flex: auto;
   }
@@ -157,133 +153,10 @@ body {
     margin: 0 auto;
   }
 }
+
 @media (max-width: 450px) {
   .cardbody > div {
     flex-direction: column;
     gap: 10px;
   }
 }
-.navbar-toggler {
-  border: none;
-  box-shadow: none !important;
-}
-
-#logout_btn,
-#login_btn,
-#register_btn {
-  border: none;
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-}
-
-.profile_userinfo {
-  color: black;
-  text-decoration: none;
-}
-
-@media (max-width: 575px) {
-  nav.navbar {
-    position: relative;
-  }
-  #userinfo {
-    position: absolute;
-    right: 50%;
-    transform: translateX(50%);
-    top: 10px;
-  }
-  .log-reg-logout-cont {
-    position: absolute;
-    top: 6px;
-    right: 10px;
-  }
-}
-.edit-btn,
-.delete-btn {
-  float: right;
-  background-color: unset;
-  border: none;
-}
-
-.edit-btn:hover,
-.delete-btn:hover {
-  background-color: unset;
-}
-
-#posts .card-header {
-  background: #262626;
-  color: rgb(229, 229, 229);
-  display: flex;
-  justify-content: space-between;
-}
-
-.delete-btn,
-.delete-btn:hover {
-  color: rgb(244, 173, 173);
-}
-
-.delete-btn:hover i,
-.edit-btn:hover i {
-  transform: scale(1.1);
-}
-
-.edit-btn,
-.edit-btn:hover {
-  color: rgb(229, 229, 229);
-}
-
-.addPost-btn,
-.addPost-btn:hover {
-  background-color: rgb(208, 207, 207);
-  border: none;
-}
-
-.user-infos:hover,
-#posts .card-body:hover {
-  cursor: pointer;
-}
-
-#add_comment_btn {
-  background: black;
-  color: rgb(208, 207, 207);
-  border: none;
-}
-
-.addPost-cont {
-  bottom: 10px;
-  right: 10px;
-  z-index: 2;
-}
-
-.toastCont {
-  z-index: 3;
-  right: 10px;
-}
-
-.card {
-  margin-top: 30px;
-}
-
-#submit_login,
-#submit_new_post,
-#submit_reg,
-#submit_edit_post,
-#confirm_delete {
-  background-color: black !important;
-}
-
-#close_login_modal,
-#submit_login,
-#submit_new_post,
-#close_new_post_modal,
-#submit_edit_post {
-  border: none !important;
-  height: 35px;
-  width: 68px;
-}
-
-#reg_modal .btn,
-#delete_post_modal .btn {
-  width: 78px;
-  border: none !important;
-}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,48 @@
+.edit-btn,
+.delete-btn {
+  float: right;
+  background-color: unset;
+  border: none;
+}
+.edit-btn:hover,
+.delete-btn:hover {
+  background-color: unset;
+}
+
+#posts .card-header {
+  background: #262626;
+  color: rgb(229, 229, 229);
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-btn,
+.delete-btn:hover {
+  color: rgb(244, 173, 173);
+}
+.delete-btn:hover i,
+.edit-btn:hover i {
+  transform: scale(1.1);
+}
+
+.edit-btn,
+.edit-btn:hover {
+  color: rgb(229, 229, 229);
+}
+
+.addPost-btn,
+.addPost-btn:hover {
+  background-color: rgb(208, 207, 207);
+  border: none;
+}
+
+.user-infos:hover,
+#posts .card-body:hover {
+  cursor: pointer;
+}
+
+#add_comment_btn {
+  background: black;
+  color: rgb(208, 207, 207);
+  border: none;
+}

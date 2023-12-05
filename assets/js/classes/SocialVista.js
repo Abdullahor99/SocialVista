@@ -28,24 +28,72 @@ class SocialVista {
     }
   }
 
+  async getUserPosts(userid) {
+
+    const baseUrl = this.getBaseUrl();
+    let url = `${baseUrl}/users/${userid}/posts`;
+
+    try {
+      const response = await axios.get(url);
+      return response;
+    }
+    catch (error) {
+      return error;
+    }
+  }
+  getUserFromLoacalStorage() {
+    return JSON.parse(localStorage.getItem("user"));
+  }
+
   renderPosts(data, reload = true) {
     if (!data)
       return;
     if (reload)
       document.getElementById("posts").innerHTML = "";
 
+    let editButtonHTMLContent = "";
+
+
     const posts = data.data.data;
     posts.forEach(post => {
-      const html =
-        `<div class="card">
-        <div class="card-header">
-          <img src="${post.author.profile_image}" alt="" class="profile__img rounded-5" height="40" width="40">
-          <span class="username ms-2 fw-bold">@${post.author.name}</span>
+
+      // standard Image feestlegen falls der Benuzer kein Bild hat.
+      let userImage = this.getValidUserImage(post.author.profile_image);
+
+      // prüfen ob Post image exestiert..
+      let imgHTML = "";
+      if (Object.keys(post.image).length != 0)
+        imgHTML = `<img src="${post.image}" alt="Bild" class="img-fluid"></img>`;
+
+      // prüfen ob post titel gesetzt ist..
+      let postTitelHTML = "";
+      if (post.title !== null)
+        postTitelHTML = `<h5 class="card-title">${post.title}</h5>`;
+
+
+
+      if (post.author.id === this.getUserFromLoacalStorage()?.id) {
+        editButtonHTMLContent = `
+        <div>
+        <button type="button" class="edit-btn btn btn-light ms-1" onclick="editpostclicked('${encodeURIComponent(JSON.stringify(post))}')"><i class="fa-solid fa-pen-to-square"></i></button>
+        <button type="button" class="delete-btn btn btn-danger" onclick="deletepostclicked('${encodeURIComponent(JSON.stringify(post))}')"><i class="fa-solid fa-trash"></i></button>
         </div>
-        <div class="card-body">
-          <img src="${post.image}" alt="Bild" class="img-fluid">
+        `;
+      }
+
+      const html =
+        `<div class="card post" id="${post.id}">
+        <div class="card-header">
+          <div class= "user-infos" onclick="profileclicked(${post.author.id})">
+            <img src="${userImage}" alt="" class="profile__img rounded-5" height="40" width="40">
+            <span class="username ms-2 fw-bold">@${post.author.name}</span>
+          </div>
+          ${editButtonHTMLContent}
+        </div>
+        <div class="card-body" onclick="postclicked(${post.id})">
+         ${imgHTML}
           <p class="dauer text-black-50">${post.created_at}</p>
-          <h5 class="card-title">${post.title}</h5>
+          ${postTitelHTML}
           <p class="card-text">${post.body}</p>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen"
           viewBox="0 0 16 16">
@@ -55,35 +103,50 @@ class SocialVista {
           <span>(${post.comments_count}) Comments</span>
         </div>
       </div>`
-
+      editButtonHTMLContent = "";
       document.getElementById("posts").innerHTML += html;
     });
 
 
-    SocialVista.currentPageNumber = ++data.data.meta.current_page
+    if (data.data.hasOwnProperty("meta"))
+      SocialVista.currentPageNumber = ++data.data.meta.current_page
   }
 
-  showToast(message, dauration) {
-    const toast = document.getElementById("toast");
-    toast.classList.add("show");
+  alert(message, type) {
 
-    document.querySelector(".toast-body").textContent = message;
+    const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+    if (!alertPlaceholder)
+      return;
+
+    const wrapper = document.createElement('div');
+    const id = this.generateRandomId(8);
+
+    wrapper.innerHTML = [
+      `<div class="alert alert-${type} alert-dismissible" role="alert" id="${id}">`,
+      `   <div>${message}</div>`,
+      '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+      '</div>'
+    ].join('');
+
+    alertPlaceholder.append(wrapper);
+    const bsAlert = new bootstrap.Alert(`#${id}`);
     setTimeout(() => {
-      toast.classList.remove("show");
-    }, dauration);
+      if (bsAlert._element != null)
+        bsAlert.close();
+    }, 5000);
   }
-  deletePrevErrors() {
-    const errors = document.querySelectorAll(".error");
-    errors.forEach((error) => {
-      error.remove();
-    })
+
+
+
+  generateRandomId(length) {
+    const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    return Array.from({ length }, () => characters[Math.floor(Math.random() * characters.length)]).join('');
   }
-  makeError(message, classnameForParent) {
-    const errorCont = document.querySelector(classnameForParent);
-    const errorDiv = document.createElement("div");
-    errorDiv.textContent = message;
-    errorDiv.classList.add("error");
-    errorCont.appendChild(errorDiv);
+  getValidUserImage(imgObj) {
+    let userImage = "https://img.freepik.com/free-vector/isolated-young-handsome-man-different-poses-white-background-illustration_632498-859.jpg?size=626&ext=jpg";
+    if (Object.keys(imgObj).length != 0)
+      userImage = imgObj;
+    return userImage;
   }
 }
 

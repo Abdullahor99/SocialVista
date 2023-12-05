@@ -1,10 +1,49 @@
+html {
+  height: 100%;
+}
+
+body {
+  background: #e8e8e879;
+}
+
+@import "./profilecard.scss";
+@import "./header.scss";
+@import "./post.scss";
+
 .addPost-cont {
   bottom: 10px;
   right: 10px;
   z-index: 2;
 }
-#toast {
-  position: fixed;
+.toastCont {
   z-index: 3;
   right: 10px;
+}
+
+.card {
+  margin-top: 30px;
+}
+
+#submit_login,
+#submit_new_post,
+#submit_reg,
+#submit_edit_post,
+#confirm_delete {
+  background-color: black !important;
+}
+
+#close_login_modal,
+#submit_login,
+#submit_new_post,
+#close_new_post_modal,
+#submit_edit_post {
+  border: none !important;
+  height: 35px;
+  width: 68px;
+}
+
+#reg_modal .btn,
+#delete_post_modal .btn {
+  width: 78px;
+  border: none !important;
 }

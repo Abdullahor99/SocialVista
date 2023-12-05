@@ -8,7 +8,6 @@ class User extends SocialVista {
 
     try {
       const response = await axios.get(finalUrl);
-      console.log(response);
       return response;
     }
     catch (error) {
@@ -58,11 +57,14 @@ class User extends SocialVista {
 
   showProfileInfo(userData) {
     const userinfo = document.getElementById("userinfo");
-    const html = `
-                  <img class="rounded-5 " src="${userData.profile_image}" alt="" height="30" width="30">
-                  <span class="username">${userData.username}</span>
-    `;
-    userinfo.innerHTML = html;
+
+    let userImage = this.getValidUserImage(userData.profile_image);
+
+    const HTML = `<img class="rounded-5 " src="${userImage}" alt="" height="30" width="30">
+    <span class="username ms-2">${userData.username}</span>`;
+
+    userinfo.innerHTML = HTML
+
   }
 
   hideProfileInfo() {
@@ -74,11 +76,19 @@ class User extends SocialVista {
     const regBtn = document.getElementById("register_btn");
     const logoutBtn = document.getElementById("logout_btn");
     const addPostcont = document.getElementById("addPost-cont");
+    const addCommentCont = document.getElementById("add_comment_cont");
 
     loginBtn.classList.add("d-none");
     regBtn.classList.add("d-none");
     logoutBtn.classList.remove("d-none");
-    addPostcont.classList.remove("d-none");
+
+    // check if element exist in the dom because this is not Gloabla element like ohters.
+    if (addPostcont)
+      addPostcont.classList.remove("d-none");
+
+    if (addCommentCont)
+      addCommentCont.classList.remove("d-none");
+
     this.showProfileInfo(userData);
   }
 
@@ -87,13 +97,20 @@ class User extends SocialVista {
     const loginBtn = document.getElementById("login_btn");
     const regBtn = document.getElementById("register_btn");
     const addPostcont = document.getElementById("addPost-cont");
+    const addCommentCont = document.getElementById("add_comment_cont");
 
     loginBtn.classList.remove("d-none");
     regBtn.classList.remove("d-none");
     logoutBtn.classList.add("d-none");
-    addPostcont.classList.add("d-none");
+    if (addPostcont)
+      addPostcont.classList.add("d-none");
+
+    if (addCommentCont)
+      addCommentCont.classList.add("d-none");
+
     this.hideProfileInfo();
   }
+
 }
 
 export default User;

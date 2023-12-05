@@ -1,11 +1,25 @@
 import Post from "../../classes/Post.js";
 import SocialVista from "../../classes/SocialVista.js";
 
+function resetModal() {
+  document.getElementById("new_post_header").textContent = "New Post";
+  document.getElementById("new_post_titel").value = "";
+  document.getElementById("new_post_body").value = "";
+  const submitBtnForNewPost = document.getElementById("submit_new_post");
+  const submitBtnForeditPost = document.getElementById("submit_edit_post");
+  submitBtnForNewPost.classList.remove("d-none");
+  submitBtnForeditPost.classList.add("d-none");
+}
+
 addEventListener("DOMContentLoaded", function () {
+  this.document.getElementById("addPost-cont").addEventListener("click", () => {
+    resetModal();
+  });
+
   const post = new Post();
   const submitNewPost = this.document.getElementById("submit_new_post");
   submitNewPost.addEventListener("click", function () {
-    post.deletePrevErrors();
+
     const title = document.getElementById("new_post_titel");
     const body = document.getElementById("new_post_body");
     const image = document.getElementById("new_post_img");
@@ -17,7 +31,7 @@ addEventListener("DOMContentLoaded", function () {
 
     post.createPost(formData).then(data => {
       if (data?.response?.status > 400) {
-        post.makeError(data.response.data.message, ".new_post_error_cont");
+        post.alert(data.response.data.message, "danger");
       }
       else {
 
@@ -26,14 +40,14 @@ addEventListener("DOMContentLoaded", function () {
         const modalInstanz = bootstrap.Modal.getInstance(modal);
         modalInstanz.hide();
         const SVista = new SocialVista();
-
+        SocialVista.schonAbgefragteUrl = [];
         SVista.getPosts(5).then((data) => {
-          SVista.renderPosts(data);
+          SVista.renderPosts(data, true);
         }).catch((error) => {
           console.error(error);
         });
 
-        post.showToast("Post created successfully", 5000);
+        post.alert("Post created successfully", "success");
       }
     });
 

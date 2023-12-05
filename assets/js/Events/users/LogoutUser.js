@@ -9,6 +9,6 @@ addEventListener("DOMContentLoaded", function () {
     localStorage.removeItem("user");
     const user = new User();
     user.showUIforLoggedOutUsers();
-    user.showToast("You have successfully logged out.", 5000);
+    user.alert("You have successfully logged out.", "success");
   });
 });
